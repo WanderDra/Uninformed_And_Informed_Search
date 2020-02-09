@@ -7,6 +7,10 @@ class Vertex:
         self.connected_edge = []
         self.connected_distance = []
         self.num = num
+        self.reached = False
+        self.square = 0
+        self.x = 0
+        self.y = 0
         empty = False
 
     def add_edge(self, end, distance):
@@ -46,3 +50,25 @@ class Vertex:
 
     def is_empty(self):
         return self.empty
+
+    def is_reached(self):
+        return self.reached
+
+    def set_reached(self):
+        self.reached = True
+
+    def set_not_reached(self):
+        self.reached = False
+
+    def set_square(self, square):
+        self.square = square
+
+    def get_square(self):
+        return self.square
+
+    def set_pos(self, x, y):
+        self.x = x
+        self.y = y
+
+    def get_pos(self):
+        return self.x, self.y

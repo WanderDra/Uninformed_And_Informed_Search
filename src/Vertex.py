@@ -11,6 +11,8 @@ class Vertex:
         self.square = 0
         self.x = 0
         self.y = 0
+        self.back_pointer = None
+        self.gx = None
         empty = False
 
     def add_edge(self, end, distance):
@@ -66,9 +68,26 @@ class Vertex:
     def get_square(self):
         return self.square
 
+    def get_square_pos(self):
+        x = (self.square - 1) % 10
+        y = 10 - int(self.square / 10)
+        return x, y
+
     def set_pos(self, x, y):
         self.x = x
         self.y = y
 
     def get_pos(self):
         return self.x, self.y
+
+    def set_back_pointer(self, vertex):
+        self.back_pointer = vertex
+
+    def get_back_pointer(self):
+        return self.back_pointer
+
+    def set_gx(self, x):
+        self.gx = x
+
+    def get_gx(self):
+        return self.gx

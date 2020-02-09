@@ -39,7 +39,8 @@ def read_data(draw=False):
             vertices[start].add_edge(end, distance)
 
     if draw is True:
-        fig = plt.figure()
+        plt.figure()
+        plt.ion()
         blocks = []
         col = []
         row = []
@@ -83,17 +84,14 @@ def read_data(draw=False):
         for vertex in vertices:
             x, y = vertex.get_pos()
             edges = vertex.get_connected_edge()
-            plt.plot(x, y, 'ro-')
+            plt.plot(x, y, 'go-')
             for dest in edges:
                 dest_x, dest_y = vertices[dest].get_pos()
                 line_x = [x, dest_x]
                 line_y = [y, dest_y]
-                plt.plot(line_x, line_y, 'ro-', linewidth=0.5)
+                plt.plot(line_x, line_y, 'go-', linewidth=0.5)
 
-        test_x, test_y = vertices[0].get_pos()
-        plt.quiver(test_x, test_y - 10, 0, 1, color='g', width=0.005)
 
-        plt.show()
 
     return vertices
 

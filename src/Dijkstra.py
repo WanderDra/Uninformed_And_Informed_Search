@@ -1,10 +1,12 @@
 from Readrer import read_data
 import os
 from Vertex import Vertex
+from matplotlib import pyplot as plt
 
 
-def dijkstra(start, end):
-    vertices = read_data(draw=False)
+def dijkstra(start, end, draw=False):
+    vertices: Vertex
+    vertices = read_data(draw=draw)
     distances = [None] * len(vertices)
     open_vertices = []
     closed_vertices = []
@@ -28,8 +30,10 @@ def dijkstra(start, end):
                 predict_distance = connected_distance[edge_num] + current_distance
                 if distances[vertex] is None:
                     distances[vertex] = predict_distance
+                    vertices[vertex].set_back_pointer(v.get_ver_num())
                 elif predict_distance < distances[vertex]:
                     distances[vertex] = predict_distance
+                    vertices[vertex].set_back_pointer(v.get_ver_num())
                 else:
                     pass
                 edge_num += 1
@@ -41,5 +45,24 @@ def dijkstra(start, end):
     else:
         print('Cannot reach the vertex')
 
+    if draw:
+        tracker = vertices[end].get_back_pointer()
+        current_pos = vertices[end].get_pos()
+        print(end)
+        while tracker is not None:
+            print(tracker)
+            x, y = vertices[tracker].get_pos()
+            x = [current_pos[0], x]
+            y = [current_pos[1], y]
+            plt.plot(x, y, 'r.-', linewidth=1)
+            current_pos = vertices[tracker].get_pos()
+            tracker = vertices[tracker].get_back_pointer()
 
-dijkstra(41, 41)
+        end_x, end_y = vertices[end].get_pos()
+        plt.quiver(end_x, end_y - 10, 0, 1, color='r', width=0.005)
+
+        plt.ioff()
+        plt.show()
+
+
+dijkstra(0, 81, draw=True)

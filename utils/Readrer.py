@@ -13,8 +13,8 @@ def read_file(path):
 
 
 def read_data(draw=False):
-    edges_data = read_file('D:\\PyProject\\UninformedAndInformedSearch\\Uninformed_And_Informed_Search\\data\\graph100_0.1\\e.txt')
-    vertices_data = read_file('D:\\PyProject\\UninformedAndInformedSearch\\Uninformed_And_Informed_Search\\data\\graph100_0.1\\v.txt')
+    edges_data = read_file('D:\\PyProject\\UninformedAndInformedSearch\\Uninformed_And_Informed_Search\\data\\graph1000_0.1\\e.txt')
+    vertices_data = read_file('D:\\PyProject\\UninformedAndInformedSearch\\Uninformed_And_Informed_Search\\data\\graph1000_0.1\\v.txt')
     print(len(vertices_data))
 
     vertices = [0] * len(vertices_data)
@@ -62,7 +62,7 @@ def read_data(draw=False):
         squares = [[0 for i in range(0)] for i in range(len(vertices_data))]
         vers_in_squares = [0] * len(vertices_data)
         for i in range(0, len(vertices_data)):
-            square_num = vertices[i].get_square()
+            square_num = vertices[i].get_square() - 1
             squares[square_num].append(i)
             vers_in_squares[square_num] += 1
         print(squares)
@@ -74,22 +74,22 @@ def read_data(draw=False):
             if vers_in_squares[block] > 0:
                 gap = 10.0 / (vers_in_squares[block] + 1)
                 for i in range(0, vers_in_squares[block]):
-                    x.append(((block - 1) % 10) * 10 + gap * (i + 1))
+                    x.append((block % 10) * 10 + gap * (i + 1))
                     y.append((10 - int(block / 10)) * 10 - gap * (i + 1))
                 count = 0
                 for vertex in squares[block]:
                     vertices[vertex].set_pos(x[count], y[count])
                     count += 1
 
-        for vertex in vertices:
-            x, y = vertex.get_pos()
-            edges = vertex.get_connected_edge()
-            plt.plot(x, y, 'go-')
-            for dest in edges:
-                dest_x, dest_y = vertices[dest].get_pos()
-                line_x = [x, dest_x]
-                line_y = [y, dest_y]
-                plt.plot(line_x, line_y, 'go-', linewidth=0.5)
+        # for vertex in vertices:
+        #     x, y = vertex.get_pos()
+        #     edges = vertex.get_connected_edge()
+        #     plt.plot(x, y, 'go-')
+        #     for dest in edges:
+        #         dest_x, dest_y = vertices[dest].get_pos()
+        #         line_x = [x, dest_x]
+        #         line_y = [y, dest_y]
+        #         plt.plot(line_x, line_y, 'go-', linewidth=0.5)
 
 
 

@@ -13,6 +13,7 @@ class Vertex:
         self.y = 0
         self.back_pointer = None
         self.gx = None
+        self.close = False
         empty = False
 
     def add_edge(self, end, distance):
@@ -70,7 +71,7 @@ class Vertex:
 
     def get_square_pos(self):
         x = (self.square - 1) % 10
-        y = 10 - int(self.square / 10)
+        y = 9 - int((self.square - 1) / 10)
         return x, y
 
     def set_pos(self, x, y):
@@ -91,3 +92,12 @@ class Vertex:
 
     def get_gx(self):
         return self.gx
+
+    def is_closed(self):
+        return self.close
+
+    def set_closed(self):
+        self.close = True
+
+    def set_not_closed(self):
+        self.close = False

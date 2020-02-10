@@ -2,9 +2,10 @@ from Readrer import read_data
 import os
 from Vertex import Vertex
 from matplotlib import pyplot as plt
+import time
 
 
-def dijkstra(start, end, draw=False):
+def dijkstra(end, start=0, draw=False):
     vertices: Vertex
     vertices = read_data(draw=draw)
     distances = [None] * len(vertices)
@@ -12,8 +13,9 @@ def dijkstra(start, end, draw=False):
     closed_vertices = []
     open_vertices.append(vertices[start])
     distances[start] = 0
+    vertices[start].set_reached()
     while len(open_vertices) != 0:
-        v = open_vertices.pop()
+        v = open_vertices.pop()             # Current vertex
         current_distance = 0
         if distances[v.get_ver_num()] is None:
             current_distance = 0
@@ -34,16 +36,18 @@ def dijkstra(start, end, draw=False):
                 elif predict_distance < distances[vertex]:
                     distances[vertex] = predict_distance
                     vertices[vertex].set_back_pointer(v.get_ver_num())
+                    open_vertices.append(vertices[vertex])
                 else:
                     pass
                 edge_num += 1
             pass
 
-    print(distances)
+    # print(distances)
     if distances[end] is not None:
         print('Result = ', distances[end])
     else:
         print('Cannot reach the vertex')
+
 
     if draw:
         tracker = vertices[end].get_back_pointer()
@@ -64,5 +68,11 @@ def dijkstra(start, end, draw=False):
         plt.ioff()
         plt.show()
 
+        # print(vertices[0].get_square_pos())
 
-dijkstra(0, 81, draw=True)
+    return distances[end]
+
+time_start = time.time()
+dijkstra(83, draw=False)
+time_end = time.time()
+print('Time cost = %fs' % (time_end - time_start))

@@ -29,10 +29,10 @@ if __name__ == '__main__':
     test_range = range(1, 1000)
     ap = Pool(len(test_range))
     for i in test_range:
-        a_result.append(ap.apply_async(astar, (i, )))
+        a_result.append(ap.apply_async(astar, ('graph1000_0.1',i, )))
     dp = Pool(len(test_range))
     for i in test_range:
-        d_result.append(dp.apply_async(dijkstra, (i, )))
+        d_result.append(dp.apply_async(dijkstra, ('graph1000_0.1',i, )))
 
     ap.close()
     ap.join()

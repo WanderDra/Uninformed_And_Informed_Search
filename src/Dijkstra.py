@@ -73,6 +73,6 @@ def dijkstra(graph_name, end, start=0, draw=False, entire=False):
     return distances[end]
 
 time_start = time.time()
-dijkstra('graph2000_0.4', 83, start=0, draw=True, entire=False)
+dijkstra('graph1000_0.1', 83, start=0, draw=True, entire=False)
 time_end = time.time()
 print('Time cost = %fs' % (time_end - time_start))

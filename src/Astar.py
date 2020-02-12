@@ -138,6 +138,6 @@ def astar(graph_name, end, start=0, draw=False, entire=False):
 
 
 time_start = time.time()
-astar('graph2000_0.4', 83, start=0, draw=True, entire=False)
+astar('graph1000_0.1', 83, start=0, draw=True, entire=False)
 time_end = time.time()
 print('Time cost = %fs' % (time_end - time_start))

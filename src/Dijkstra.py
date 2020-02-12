@@ -5,9 +5,9 @@ from matplotlib import pyplot as plt
 import time
 
 
-def dijkstra(end, start=0, draw=False):
+def dijkstra(graph_name, end, start=0, draw=False, entire=False):
     vertices: Vertex
-    vertices = read_data(draw=draw)
+    vertices = read_data(graph_name, draw=draw, entire=entire)
     distances = [None] * len(vertices)
     open_vertices = []
     closed_vertices = []
@@ -73,6 +73,6 @@ def dijkstra(end, start=0, draw=False):
     return distances[end]
 
 time_start = time.time()
-dijkstra(83, draw=False)
+dijkstra('graph2000_0.4', 83, start=0, draw=True, entire=False)
 time_end = time.time()
 print('Time cost = %fs' % (time_end - time_start))

@@ -6,9 +6,9 @@ from matplotlib import pyplot as plt
 import time
 
 
-def astar(end, start=0, draw=False):
+def astar(graph_name, end, start=0, draw=False, entire=False):
     vertices: Vertex
-    vertices = read_data(draw=draw)
+    vertices = read_data(graph_name, draw=draw, entire=entire)
     # Direction
     e_x, e_y = vertices[end].get_square_pos()
     open_list = []
@@ -138,6 +138,6 @@ def astar(end, start=0, draw=False):
 
 
 time_start = time.time()
-astar(83, draw=False)
+astar('graph2000_0.4', 83, start=0, draw=True, entire=False)
 time_end = time.time()
 print('Time cost = %fs' % (time_end - time_start))

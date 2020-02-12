@@ -1,6 +1,7 @@
 from Vertex import Vertex
 from matplotlib import pyplot as plt
 import numpy as np
+import os
 
 
 def read_file(path):
@@ -12,9 +13,18 @@ def read_file(path):
     return data
 
 
-def read_data(draw=False):
-    edges_data = read_file('D:\\PyProject\\UninformedAndInformedSearch\\Uninformed_And_Informed_Search\\data\\graph1000_0.1\\e.txt')
-    vertices_data = read_file('D:\\PyProject\\UninformedAndInformedSearch\\Uninformed_And_Informed_Search\\data\\graph1000_0.1\\v.txt')
+def read_data(graph_name, draw=False, entire=False):
+
+    paths = os.path.abspath(os.path.dirname(__file__)).split('shippingSchedule')[0].split('\\')[:-1]
+    project_dir = paths[0]
+    paths.pop(0)
+    for path in paths:
+        project_dir += os.sep + path
+
+    edges_data = read_file(
+        os.path.join(project_dir, 'data', graph_name, 'e.txt'))
+    vertices_data = read_file(
+        os.path.join(project_dir, 'data', graph_name, 'v.txt'))
     print(len(vertices_data))
 
     vertices = [0] * len(vertices_data)
@@ -81,15 +91,17 @@ def read_data(draw=False):
                     vertices[vertex].set_pos(x[count], y[count])
                     count += 1
 
-        # for vertex in vertices:
-        #     x, y = vertex.get_pos()
-        #     edges = vertex.get_connected_edge()
-        #     plt.plot(x, y, 'go-')
-        #     for dest in edges:
-        #         dest_x, dest_y = vertices[dest].get_pos()
-        #         line_x = [x, dest_x]
-        #         line_y = [y, dest_y]
-        #         plt.plot(line_x, line_y, 'go-', linewidth=0.5)
+        # Draw entire graph
+        if entire is True:
+            for vertex in vertices:
+                x, y = vertex.get_pos()
+                edges = vertex.get_connected_edge()
+                plt.plot(x, y, 'go-')
+                for dest in edges:
+                    dest_x, dest_y = vertices[dest].get_pos()
+                    line_x = [x, dest_x]
+                    line_y = [y, dest_y]
+                    plt.plot(line_x, line_y, 'go-', linewidth=0.5)
 
 
 

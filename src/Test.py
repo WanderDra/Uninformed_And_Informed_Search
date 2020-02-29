@@ -26,13 +26,13 @@ def test():
 if __name__ == '__main__':
     a_result = []
     d_result = []
-    test_range = range(1, 1000)
+    test_range = range(1, 500)
     ap = Pool(len(test_range))
     for i in test_range:
-        a_result.append(ap.apply_async(astar, ('graph1000_0.1',i, )))
+        a_result.append(ap.apply_async(astar, ('graph500_0.1',i, )))
     dp = Pool(len(test_range))
     for i in test_range:
-        d_result.append(dp.apply_async(dijkstra, ('graph1000_0.1',i, )))
+        d_result.append(dp.apply_async(dijkstra, ('graph500_0.1',i, )))
 
     ap.close()
     ap.join()
@@ -50,7 +50,7 @@ if __name__ == '__main__':
     count = 0
     d_better = 0
     a_better = 0
-    for i in range(0, 999):
+    for i in range(0, 499):
         if af_result[i] == df_result[i]:
             right += 1
         elif af_result[i] > df_result[i]:

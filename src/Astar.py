@@ -17,8 +17,8 @@ def astar(graph_name, end, start=0, draw=False, entire=False):
     h = [None] * len(vertices)
     f = [None] * len(vertices)
     s_x, s_y = vertices[start].get_square_pos()
-    # h[start] = int(math.sqrt(((e_x - s_x) * 10) ** 2 + ((e_y - s_y) * 10) ** 2)) - 0
-    h[start] = 0
+    h[start] = int(math.sqrt(((e_x - s_x) * 10) ** 2 + ((e_y - s_y) * 10) ** 2)) / 2
+    # h[start] = 0
     if h[start] < 0:
         h[start] = 0
     f[start] = vertices[start].get_gx() + h[start]
@@ -57,8 +57,8 @@ def astar(graph_name, end, start=0, draw=False, entire=False):
                 # Refresh possible
             # h(x)
             s_x, s_y = next_vertex.get_square_pos()
-            # h[next_vertex.get_ver_num()] = int(math.sqrt(((e_x - s_x) * 10) ** 2 + ((e_y - s_y) * 10) ** 2)) - 0
-            h[next_vertex.get_ver_num()] = 0
+            h[next_vertex.get_ver_num()] = int(math.sqrt(((e_x - s_x) * 10) ** 2 + ((e_y - s_y) * 10) ** 2)) / 2
+            # h[next_vertex.get_ver_num()] = 0
             if h[next_vertex.get_ver_num()] < 0:
                 h[next_vertex.get_ver_num()] = 0
             # f(x)
@@ -96,14 +96,14 @@ def astar(graph_name, end, start=0, draw=False, entire=False):
         result = temp_f
         print('Result = ', result)
 
-    print('track = ')
+    print('Path = ')
     print(end)
     while tracker is not None:
-        print(tracker)
+        print('<-', tracker)
         tracker = vertices[tracker].get_back_pointer()
     tracker = vertices[end].get_back_pointer()
 
-    print('runtime = ', calculation_times)
+    print('Number of steps = ', calculation_times)
 
     # print(f)
     # print(h)
@@ -150,6 +150,6 @@ def astar(graph_name, end, start=0, draw=False, entire=False):
 
 
 time_start = time.time()
-astar('graph2000_0.4', 83, start=0, draw=False, entire=False)
+astar('graph500_0.1', 83, start=0, draw=False, entire=False)
 time_end = time.time()
 print('Time cost = %fs' % (time_end - time_start))

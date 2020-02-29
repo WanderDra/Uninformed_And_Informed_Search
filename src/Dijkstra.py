@@ -14,6 +14,7 @@ def dijkstra(graph_name, end, start=0, draw=False, entire=False):
     open_vertices.append(vertices[start])
     distances[start] = 0
     vertices[start].set_reached()
+    calculation_times = 0
     while len(open_vertices) != 0:
         v = open_vertices.pop()             # Current vertex
         current_distance = 0
@@ -26,6 +27,7 @@ def dijkstra(graph_name, end, start=0, draw=False, entire=False):
         edge_num = 0
         if connected_edge:
             for vertex in connected_edge:
+                calculation_times += 1
                 if vertices[vertex].is_reached() is not True:
                     open_vertices.append(vertices[vertex])
                     vertices[vertex].set_reached()
@@ -47,6 +49,8 @@ def dijkstra(graph_name, end, start=0, draw=False, entire=False):
         print('Result = ', distances[end])
     else:
         print('Cannot reach the vertex')
+
+    print('runtime = ', calculation_times)
 
 
     if draw:
@@ -73,6 +77,6 @@ def dijkstra(graph_name, end, start=0, draw=False, entire=False):
     return distances[end]
 
 time_start = time.time()
-dijkstra('graph1000_0.1', 83, start=0, draw=True, entire=False)
+dijkstra('graph2000_0.4', 83, start=0, draw=False, entire=False)
 time_end = time.time()
 print('Time cost = %fs' % (time_end - time_start))

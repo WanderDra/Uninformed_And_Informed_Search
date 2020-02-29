@@ -17,13 +17,14 @@ def astar(graph_name, end, start=0, draw=False, entire=False):
     h = [None] * len(vertices)
     f = [None] * len(vertices)
     s_x, s_y = vertices[start].get_square_pos()
-    h[start] = int(math.sqrt(((e_x - s_x) * 10) ** 2 + ((e_y - s_y) * 10) ** 2)) - 0
-    # h[start] = 0
+    # h[start] = int(math.sqrt(((e_x - s_x) * 10) ** 2 + ((e_y - s_y) * 10) ** 2)) - 0
+    h[start] = 0
     if h[start] < 0:
         h[start] = 0
     f[start] = vertices[start].get_gx() + h[start]
     temp_f = None
     # Searching
+    calculation_times = 0
     while len(open_list) != 0:
         # print(len(open_list))
         v: Vertex
@@ -40,6 +41,7 @@ def astar(graph_name, end, start=0, draw=False, entire=False):
         next_circle = False
         flag = False
         for vertex in range(0, len(connect_edges)):
+            calculation_times += 1
             next_vertex: Vertex
             next_vertex = vertices[connect_edges[vertex]]
             if next_vertex.is_closed() is True:
@@ -55,8 +57,8 @@ def astar(graph_name, end, start=0, draw=False, entire=False):
                 # Refresh possible
             # h(x)
             s_x, s_y = next_vertex.get_square_pos()
-            h[next_vertex.get_ver_num()] = int(math.sqrt(((e_x - s_x) * 10) ** 2 + ((e_y - s_y) * 10) ** 2)) - 0
-            # h[next_vertex.get_ver_num()] = 0
+            # h[next_vertex.get_ver_num()] = int(math.sqrt(((e_x - s_x) * 10) ** 2 + ((e_y - s_y) * 10) ** 2)) - 0
+            h[next_vertex.get_ver_num()] = 0
             if h[next_vertex.get_ver_num()] < 0:
                 h[next_vertex.get_ver_num()] = 0
             # f(x)
@@ -84,12 +86,24 @@ def astar(graph_name, end, start=0, draw=False, entire=False):
             open_list.append(vertices[f_min_pos])
             open_list.pop(f_min_open_list_pos)
 
+    tracker = vertices[end].get_back_pointer()
+    current_pos = vertices[end].get_pos()
+
     if temp_f is None:
         result = None
         print('Cannot reach the end')
     else:
         result = temp_f
         print('Result = ', result)
+
+    print('track = ')
+    print(end)
+    while tracker is not None:
+        print(tracker)
+        tracker = vertices[tracker].get_back_pointer()
+    tracker = vertices[end].get_back_pointer()
+
+    print('runtime = ', calculation_times)
 
     # print(f)
     # print(h)
@@ -102,12 +116,10 @@ def astar(graph_name, end, start=0, draw=False, entire=False):
     if draw:
         temp = vertices[end].get_ver_num()
 
-        tracker = vertices[end].get_back_pointer()
-        current_pos = vertices[end].get_pos()
-        print(end)
+        # print(end)
         result2 = 0
         while tracker is not None:
-            print(tracker)
+            # print(tracker)
             x, y = vertices[tracker].get_pos()
             x = [current_pos[0], x]
             y = [current_pos[1], y]
@@ -125,7 +137,7 @@ def astar(graph_name, end, start=0, draw=False, entire=False):
         end_x, end_y = vertices[end].get_pos()
         plt.quiver(end_x, end_y - 10, 0, 1, color='r', width=0.005)
 
-        print(result2)
+        # print(result2)
 
         plt.ioff()
         plt.show()
@@ -138,6 +150,6 @@ def astar(graph_name, end, start=0, draw=False, entire=False):
 
 
 time_start = time.time()
-astar('graph1000_0.1', 83, start=0, draw=True, entire=False)
+astar('graph2000_0.4', 83, start=0, draw=False, entire=False)
 time_end = time.time()
 print('Time cost = %fs' % (time_end - time_start))
